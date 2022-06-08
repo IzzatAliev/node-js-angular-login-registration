@@ -3,28 +3,10 @@ const cors = require("cors");
 const cookieSession = require("cookie-session");
 const db = require("./app/models/index");
 const app = express();
-const { QueryTypes } = require("sequelize");
 
 db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and Resync Db");
-  initial();
 });
-
-function initial() {
-  db.sequelize.query(
-    "Insert into roles (name,created_at, updated_at) values ('user', CURRENT_TIME , CURRENT_TIME)",
-    {
-        type: QueryTypes.INSERT
-    }
-  );
-
-  db.sequelize.query(
-    "Insert into roles (name,created_at, updated_at) values ('admin', CURRENT_TIME, CURRENT_TIME)",
-    {
-        type: QueryTypes.INSERT
-    }
-  );
-}
 
 app.use(
   cors({

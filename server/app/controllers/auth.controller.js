@@ -1,15 +1,13 @@
 const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
-const Role = db.role;
-const Op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const signup = async (req, res) => {
-    // Save User to Database
+
     try {
-        const user = await User.create({
+        User.create({
             email: req.body.email,
             login: req.body.login,
             username: req.body.username,
@@ -17,21 +15,7 @@ const signup = async (req, res) => {
             birthDate: req.body.birthDate,
             country: req.body.country
         });
-        if (req.body.roles) {
-            const roles = await Role.findAll({
-                where: {
-                    name: {
-                        [Op.or]: req.body.roles,
-                    },
-                },
-            });
-            const result = user.setRoles(roles);
-            if (result) res.send({ message: "User registered successfully!" });
-        } else {
-            // user has role = 1
-            const result = user.setRoles([1]);
-            if (result) res.send({ message: "User registered successfully!" });
-        }
+        res.send({ message: "User registered successfully!" });
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
@@ -39,12 +23,20 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
     try {
-        const user = await User.findOne({
-            or: {
-                login: req.body.login,
-                email: req.body.email,
-            },
-        });
+        let user
+        if(req.body.email){
+            user = await User.findOne({
+                where: { email: req.body.email }
+            }).catch((err) => {
+                console.log(err.message)
+            });
+        } else {
+            user = await User.findOne({
+                where: { login: req.body.login }
+            }).catch((err) => {
+                console.log(err.message)
+            });
+        }
         if (!user) {
             return res.status(404).send({ message: "User Not found." });
         }
@@ -60,17 +52,11 @@ const signin = async (req, res) => {
         const token = jwt.sign({ id: user.id }, config.secret, {
             expiresIn: 86400, // 24 hours
         });
-        let authorities = [];
-        const roles = await user.getRoles();
-        for (let i = 0; i < roles.length; i++) {
-            authorities.push("ROLE_" + roles[i].name.toUpperCase());
-        }
         req.session.token = token;
         return res.status(200).send({
             id: user.id,
             email: user.email,
             login: user.login,
-            roles: authorities,
             username: user.username,
             birthDate: user.birthDate,
             country: user.country

@@ -8,19 +8,19 @@
       novalidate
     >
       <div class="form-group">
-        <label for="username">Login or Email</label>
+        <label for="login">Login or Email</label>
         <input
           type="text"
           class="form-control"
           name="username"
-          [(ngModel)]="form.username"
+          [(ngModel)]="form.login"
           required
-          #username="ngModel"
+          #login="ngModel"
         />
         <div
           class="alert alert-danger"
           role="alert"
-          *ngIf="username.errors && f.submitted"
+          *ngIf="login.errors && f.submitted"
         >
           Login or Email is required!
         </div>
@@ -63,7 +63,7 @@
       </div>
     </form>
     <div class="alert alert-success" *ngIf="isLoggedIn">
-      Logged in as {{ roles }}.
+      Logged in .
     </div>
   </div>
 </div>

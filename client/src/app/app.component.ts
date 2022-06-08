@@ -11,7 +11,6 @@ export class AppComponent {
 
   private roles: string[] = [];
   isLoggedIn = false;
-  showAdminBoard = false;
   username?: string;
 
   constructor(private storageService: StorageService, private authService: AuthService) { }
@@ -21,11 +20,10 @@ export class AppComponent {
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
       this.roles = user.roles;
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.username = user.username;
     }
   }
-  
+
   logout(): void {
     this.authService.logout().subscribe({
       next: res => {

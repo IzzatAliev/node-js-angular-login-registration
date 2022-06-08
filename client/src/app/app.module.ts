@@ -7,7 +7,6 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 import { BoardUserComponent } from './components/board-user/board-user.component';
 import {httpInterceptorProviders} from "./_helpers/auth.interceptor";
 import {FormsModule} from "@angular/forms";
@@ -21,7 +20,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    BoardAdminComponent,
     BoardUserComponent
   ],
   imports: [

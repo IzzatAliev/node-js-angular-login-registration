@@ -8,6 +8,8 @@ import {AuthService} from "../../_services/auth.service";
 })
 export class RegisterComponent implements OnInit {
 
+  selected: Date | null | undefined;
+
   form: any = {
     email: null,
     login: null,
