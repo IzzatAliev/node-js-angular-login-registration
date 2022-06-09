@@ -7,7 +7,8 @@ const bcrypt = require("bcryptjs");
 const signup = async (req, res) => {
 
     try {
-        User.create({
+        let user
+        user = User.create({
             email: req.body.email,
             login: req.body.login,
             username: req.body.username,
@@ -15,6 +16,10 @@ const signup = async (req, res) => {
             birthDate: req.body.birthDate,
             country: req.body.country
         });
+        const token = jwt.sign({ id: user.id }, config.secret, {
+            expiresIn: 86400, // 24 hours
+        });
+        req.session.token = token;
         res.send({ message: "User registered successfully!" });
     } catch (error) {
         res.status(500).send({ message: error.message });
