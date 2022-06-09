@@ -9,7 +9,6 @@ import {AuthService} from "./_services/auth.service";
 })
 export class AppComponent {
 
-  private roles: string[] = [];
   isLoggedIn = false;
   username?: string;
 
@@ -19,7 +18,6 @@ export class AppComponent {
     this.isLoggedIn = this.storageService.isLoggedIn();
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
-      this.roles = user.roles;
       this.username = user.username;
     }
   }

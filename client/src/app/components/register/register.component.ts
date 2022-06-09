@@ -9,6 +9,8 @@ import {StorageService} from "../../_services/storage.service";
 })
 export class RegisterComponent implements OnInit {
 
+  countries:Array<string> = ['kiril', 'anton']
+
   selected: Date | null | undefined;
 
   form: any = {
@@ -51,5 +53,6 @@ export class RegisterComponent implements OnInit {
 
   reloadPage(): void {
     window.location.reload();
+    this.ngOnInit()
   }
 }
