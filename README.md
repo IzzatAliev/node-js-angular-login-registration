@@ -1,7 +1,7 @@
 # NodeJs-Angular-Login-Registration
 
 ### https://github.com/IzzatAliev/node-js-angular-login-registration
-### https://young-coast-43788.herokuapp.com/
+### https://node-js-angular-login-registr.herokuapp.com/
 
 ## Run Server
 
